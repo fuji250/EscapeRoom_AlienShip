@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b14bffca57d52404da806c5ad682fb2d, type: 3}
+  m_Name: ItemListEntity
+  m_EditorClassIdentifier: 
+  itemList:
+  - type: 0
+    sprite: {fileID: 21300000, guid: 02bd0293c11e92f43a3dda56c7449f32, type: 3}
+    zoomObj: {fileID: 1073456671534280226, guid: f558bc7e09a238f45b66e3a9feffe04e, type: 3}
+  - type: 1
+    sprite: {fileID: 21300000, guid: 2cb8b4e8b096fa547b269f57d1b2cdbe, type: 3}
+    zoomObj: {fileID: 5800260511902693161, guid: fcdf8bfe46816cb4684d7e5b31320123, type: 3}
+  - type: 2
+    sprite: {fileID: 21300000, guid: 2cb8b4e8b096fa547b269f57d1b2cdbe, type: 3}
+    zoomObj: {fileID: 5800260511902693161, guid: fcdf8bfe46816cb4684d7e5b31320123, type: 3}
