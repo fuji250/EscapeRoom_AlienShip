@@ -65,33 +65,10 @@ public class CameraManager : MonoBehaviour
         currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
     }
 
-
-    public void OnUpButton(Camera camera)
+    public void SetZoomCamera(Transform transform)
     {
-        currentCamera.gameObject.SetActive(false);
-        camera.gameObject.SetActive(true);
-        currentCamera = camera;
-
-        HideMoveButton();
-        backButton.SetActive(true);
-
-    }
-
-    public void OnDownButton(Camera camera)
-    {
-        currentCamera.gameObject.SetActive(false);
-        camera.gameObject.SetActive(true);
-        currentCamera = camera;
-
-        HideMoveButton();
-        backButton.SetActive(true);
-    }
-
-    public void SetZoomCamera(Camera camera)
-    {
-        currentCamera.gameObject.SetActive(false);
-        camera.gameObject.SetActive(true);
-        currentCamera = camera;
+        currentCamera.transform.position = transform.position;
+        currentCamera.transform.rotation = transform.rotation;
 
         HideMoveButton();
         backButton.SetActive(true);
@@ -99,9 +76,8 @@ public class CameraManager : MonoBehaviour
 
     public void OnBackButton()
     {
-        mainCamera.gameObject.SetActive(true);
-        currentCamera.gameObject.SetActive(false);
-        currentCamera = mainCamera;
+        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
+        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
 
         ShowMoveButton();
         backButton.SetActive(false);

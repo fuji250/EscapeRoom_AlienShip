@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CameraZoomObj : MonoBehaviour
 {
-    [SerializeField] Camera zoomCamera = default;
+    [SerializeField] Transform zoomTransform = default;
     // クリックしたら、用意してあるカメラに切り替える
     public void OnClickThis()
     {
         Debug.Log("カメラ切り替え");
-        CameraManager.instance.SetZoomCamera(zoomCamera);
+        CameraManager.instance.SetZoomCamera(zoomTransform);
     }
 }
