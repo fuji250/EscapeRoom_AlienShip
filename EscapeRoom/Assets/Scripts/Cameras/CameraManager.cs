@@ -1,18 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraManager : MonoBehaviour
 {
-
-
-    // カメラの切り替え
-    // どこにどのカメラを有効にするのか
-    // どこに
-    // ・mainの全体を回転するカメラ
-    // ・ズームしたときのカメラ
-
-    Camera currentCamera;
     Camera mainCamera;
 
     [SerializeField] GameObject movePanel;
@@ -23,9 +15,13 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Transform[] mainCameraTransforms = default;
     int currentMainPosition = default;
 
+    PhysicsRaycaster raycaster;
+    LayerMask eventMask;
+    LayerMask zoomEventMask;
 
     //どのファイルからでも関数が実行できるようにする
     public static CameraManager instance;
+
     private void Awake()
     {
         instance = this;
@@ -35,12 +31,17 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        currentCamera = Camera.main;
         currentMainPosition = 0;
-        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
-        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        CamPosChange();
 
         backButton.SetActive(false);
+
+        //Raycasaterの取得
+        if (TryGetComponent<PhysicsRaycaster>(out this.raycaster))
+        {
+            this.eventMask = this.raycaster.eventMask;
+        }    
+        zoomEventMask = Camera.main.GetComponent<PhysicsRaycaster>().eventMask;
     }
 
     public void TurnLeft()
@@ -50,8 +51,8 @@ public class CameraManager : MonoBehaviour
         {
             currentMainPosition = mainCameraTransforms.Length-1;
         }
-        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
-        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        CamPosChange();
+
     }
 
     public void TurnRight()
@@ -61,36 +62,40 @@ public class CameraManager : MonoBehaviour
         {
             currentMainPosition = 0;
         }
-        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
-        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        CamPosChange();
     }
 
     public void SetZoomCamera(Transform transform)
     {
-        currentCamera.transform.position = transform.position;
-        currentCamera.transform.rotation = transform.rotation;
+        mainCamera.transform.position = transform.position;
+        mainCamera.transform.rotation = transform.rotation;
 
         HideMoveButton();
         backButton.SetActive(true);
+
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = this.eventMask;
     }
 
     public void OnBackButton()
     {
-        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
-        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        CamPosChange();
 
         ShowMoveButton();
         backButton.SetActive(false);
+        Camera.main.GetComponent<PhysicsRaycaster>().eventMask = zoomEventMask;
     }
 
-    
+    void CamPosChange()
+    {
+        mainCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
+        mainCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+    }
 
     public void HideMoveButton()
     {
         //全ての移動ボタンを非表示にする
         movePanel.SetActive(false);
         backButton.SetActive(false);
-        //upButton.SetActive(false);
     }
 
     public void ShowMoveButton()
@@ -98,6 +103,5 @@ public class CameraManager : MonoBehaviour
         //全ての移動ボタンを表示する
         movePanel.SetActive(true);
         backButton.SetActive(true);
-        //upButton.SetActive(true);
     }
 }
