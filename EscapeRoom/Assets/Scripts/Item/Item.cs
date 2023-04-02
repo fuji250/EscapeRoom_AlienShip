@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Item
 {
-
     //—ñ‹“Œ^Fí—Ş‚ğ—ñ‹“‚·‚é
     public enum Type
     {

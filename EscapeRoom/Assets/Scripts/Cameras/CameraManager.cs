@@ -35,6 +35,10 @@ public class CameraManager : MonoBehaviour
         CamPosChange();
 
         backButton.SetActive(false);
+        
+        //最初はブレーカーだけに集中させるため移動ボタンは消す
+        HideMoveButton();
+        
 
         //Raycasaterの取得
         if (TryGetComponent<PhysicsRaycaster>(out this.raycaster))

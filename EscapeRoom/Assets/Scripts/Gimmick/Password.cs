@@ -24,10 +24,9 @@ public class Password : MonoBehaviour
 
     public void OnMarkButton(int position)
     {
-        // positionのマークを変更する
+        // マークを変更する
         ChangeMark(position);
-        // positionの画像を表示する
-        ShowMark(position);
+        
         if (IsClear() == true)
         {
             Clear();
@@ -41,10 +40,8 @@ public class Password : MonoBehaviour
         {
             currentNum[position] = 0;
         }
-    }
-
-    void ShowMark(int position)
-    {
+        
+        //TODO ここ複雑な処理になってるけどそれぞれの画像のリストの何番目かどかで記号の数を取得してそれが３以上になったら０に戻すとかでスッキリできるかも
         int index = currentNum[position]; // int化
         if (position == 0)
         {
@@ -71,16 +68,16 @@ public class Password : MonoBehaviour
             Sprites[position].sprite = SquareResourceSpr[index];
             Sprites[position+3].sprite = TriangleResourceSpr[index];
         }
-
-        Debug.Log(currentNum);
     }
+
 
     //クリアした時に実行する関数
     public void Clear()
     {
         Debug.Log("クリア");
-        Destroy(this);
         ClearEvent.Invoke();
+
+        Destroy(this);
     }
 
     //クリアしているか判定する関数
